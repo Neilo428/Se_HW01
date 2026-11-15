@@ -1,11 +1,19 @@
 import matplotlib.pyplot as plt
 
+CATEGORY_NAMES = {
+    "food": "Food",
+    "tran": "Transport",
+    "ent": "Entertainment",
+    "oth": "Other",
+}
+
 
 def show_chart(data):
-    """依類別加總多筆支出，畫成圓餅圖，扇形內顯示金額與百分比（v2）。
+    """依類別加總多筆支出，在同一個視窗即時更新圓餅圖（v3）。
 
     data: 多筆支出，每筆格式為 [date, amount, category, note]
           所有欄位都是字串，note 可省略。
+          資料格式的檢查由 input.py 負責。
     """
     totals = {}
     for record in data:
@@ -19,8 +27,24 @@ def show_chart(data):
         value = total * pct / 100
         return f"{value:.0f}\n({pct:.1f}%)"
 
-    plt.pie(totals.values(), labels=totals.keys(), autopct=make_label)
-    plt.show()
+    labels = [CATEGORY_NAMES.get(c, c) for c in totals]
+    # 只有一個類別時，把文字放在圓心
+    pct_distance = 0 if len(totals) == 1 else 0.6
+
+    plt.ion()                       # 互動模式：畫圖不會卡住程式
+    plt.figure("Expense Chart")     # 固定使用同一個視窗
+    plt.clf()                       # 清掉上一次的圖
+    plt.pie(totals.values(), labels=labels,
+            autopct=make_label, pctdistance=pct_distance)
+    plt.title(f"Expenses by Category (Total: {total:.0f})")
+    plt.pause(0.1)                  # 讓視窗更新畫面
+
+
+def keep_chart():
+    """輸入結束後呼叫，讓圖表視窗保持開啟，直到使用者關閉。"""
+    if plt.get_fignums():
+        plt.ioff()
+        plt.show()
 
 
 if __name__ == "__main__":
@@ -33,3 +57,4 @@ if __name__ == "__main__":
         ["2026-11-13", "450", "oth", "文具"],
     ]
     show_chart(test_data)
+    keep_chart()
