@@ -33,13 +33,15 @@ print("Input format: date, amount, category, note (or Enter 'q' to quit)")
 print(f"Category:{CATEGORIES}")
 while True:
     entry = input("> ").strip().split(",",3)
-    
+    entry = [e.strip() for e in entry]
+
     if entry[0].lower() == "q":
         print("Exit")
         break
 
     if not check(entry):
         continue
+    entry[2] = entry[2].lower()
 
     data.append(entry)
     #print(f"added：{entry}")
