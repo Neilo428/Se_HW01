@@ -2,15 +2,16 @@ import matplotlib.pyplot as plt
 
 
 def show_chart(data):
-    """將一筆支出畫成圓餅圖，扇形內顯示金額與百分比（v1：只處理單筆）。
+    """依類別加總多筆支出，畫成圓餅圖，扇形內顯示金額與百分比（v2）。
 
-    data: 一筆支出，格式為 [date, amount, category, note]
+    data: 多筆支出，每筆格式為 [date, amount, category, note]
           所有欄位都是字串，note 可省略。
     """
     totals = {}
-    amount = float(data[1])
-    category = data[2]
-    totals[category] = totals.get(category, 0) + amount
+    for record in data:
+        amount = float(record[1])
+        category = record[2]
+        totals[category] = totals.get(category, 0) + amount
 
     total = sum(totals.values())
 
@@ -23,5 +24,12 @@ def show_chart(data):
 
 
 if __name__ == "__main__":
-    test_data = ["2026-11-10", "130", "food", "早安美之城"]
+    test_data = [
+        ["2026-11-10", "130", "food", "早安美之城"],
+        ["2026-11-10", "30", "tran", "公車"],
+        ["2026-11-11", "250", "ent", "電影"],
+        ["2026-11-11", "95", "food"],
+        ["2026-11-12", "60", "tran"],
+        ["2026-11-13", "450", "oth", "文具"],
+    ]
     show_chart(test_data)
