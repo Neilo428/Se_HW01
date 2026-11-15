@@ -19,7 +19,7 @@ def check(entry):
         print("DATE ERROR")
         return False
 
-    if not amount_str.isdigit():
+    if not amount_str.isdigit() or int(amount_str) == 0:
         print("AMOUNT ERROR")
         return False
 
@@ -30,6 +30,7 @@ def check(entry):
     return True
 
 print("Input format: date, amount, category, note (or Enter 'q' to quit)")
+print("Example: 2026-11-15,130,food,breakfast")
 print(f"Category:{CATEGORIES}")
 while True:
     entry = input("> ").strip().split(",",3)
@@ -48,4 +49,4 @@ while True:
     #print(f"data：{data}")
 
     show_chart(data)
-keep_chart()  
+keep_chart()
