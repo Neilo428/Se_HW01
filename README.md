@@ -64,6 +64,9 @@ Category:{'tran', 'ent', 'food', 'oth'}
 
 ![圓餅圖範例](images/piechart.png)
 
+## Demo 影片
+[觀看 Demo 影片](https://youtu.be/ZrfomheRtlI)
+
 ## 分工
 - Ernie777：`input.py`（支出輸入與防呆檢查）
 - Neilo428：`output.py`（圓餅圖繪製與即時更新）
